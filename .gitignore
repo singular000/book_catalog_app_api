@@ -20,3 +20,6 @@
 
 # Ignore vim files
 .swp
+
+# Ignore env
+.env
