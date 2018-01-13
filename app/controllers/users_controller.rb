@@ -57,4 +57,21 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :password_digest)
     end
+
+    def create_token(id, username)
+      JWT.encode(payload(id, username), ENV['JWT_SECRET'], 'HS256')
+    end
+
+    def payload(id, username)
+      {
+        exp: (Time.now + 1.day.from_now).to_i,
+        iat: Time.now.to_i,
+        iss: ENV['JWT_ISSUER'],
+        user: {
+          id: id,
+          username: username
+        }
+      }
+    end
+
 end
